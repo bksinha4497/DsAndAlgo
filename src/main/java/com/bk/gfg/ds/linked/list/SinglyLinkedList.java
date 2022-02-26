@@ -12,7 +12,7 @@ public class SinglyLinkedList {
 		}
 	}
 	
-	public void insert(int data) {
+	public void insertAtEnd(int data) {
 		if(head==null) {
 			head = new Node(data);
 			head.next=null;
@@ -21,6 +21,32 @@ public class SinglyLinkedList {
 			node.next=null;
 			head.next=node;
 		}
+	}
+	public void insertAtFront(int data) {
+			Node node = new Node(data);
+			node.next=head;
+			head =node;
+	}
+	
+	public void insertAfter(Node prevNode , int data) {
+		if(prevNode==null) {
+			System.out.println("Previous node cannot be null");
+			return;
+		}
+		Node node = new Node(data);
+		node.next=prevNode.next;
+		prevNode.next=node;
+	}
+	
+	public Node getNodeForElement(int data) {
+		Node node = head;
+		while(node!=null) {
+			if(node.data==data) {
+				return node;
+			}
+			node=node.next;
+		}
+		return null;
 	}
 	
 	public void printList() {
@@ -33,8 +59,11 @@ public class SinglyLinkedList {
 	
 	public static void main(String[] args) {
 		SinglyLinkedList list = new SinglyLinkedList();
-		list.insert(1);
-		list.insert(2);
+		list.insertAtEnd(1);
+		list.insertAtEnd(2);
+		list.insertAtFront(3);
+		list.insertAtFront(4);
+		list.insertAfter(list.getNodeForElement(4), 5);
 		list.printList();
 	}
 
