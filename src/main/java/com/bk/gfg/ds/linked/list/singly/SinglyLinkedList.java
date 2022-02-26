@@ -1,4 +1,5 @@
-package com.bk.gfg.ds.linked.list;
+package com.bk.gfg.ds.linked.list.singly;
+
 
 public class SinglyLinkedList {
 	
@@ -14,14 +15,16 @@ public class SinglyLinkedList {
 	}
 	
 	public void insertAtEnd(int data) {
+		Node newNode = new Node(data);
 		if(head==null) {
-			head = new Node(data);
-			head.next=null;
-		}else {
-			Node node = new Node(data);
-			node.next=null;
-			head.next=node;
+			head = newNode;
+			return;
 		}
+		Node node =head;
+		while(node.next!=null) {
+			node=node.next;
+		}
+		node.next=newNode;
 	}
 	public void insertAtFront(int data) {
 			Node node = new Node(data);
@@ -131,6 +134,60 @@ public class SinglyLinkedList {
 			node = node.next;
 		return node.data;
 	}
+	
+	public int getMiddleOfList() {
+		Node slowPtr = head;
+		Node fastPtr = head;
+		while(fastPtr!=null && fastPtr.next!=null) {
+			slowPtr = slowPtr.next;
+			fastPtr = fastPtr.next.next;
+		}
+		return slowPtr!=null?slowPtr.data:-1;
+	}
+	
+	public int countOccurance(int data) {
+		Node node = head;
+		int count=0;
+		while(node!=null) {
+			if(node.data==data) {
+				count++;
+			}
+			node=node.next;
+		}
+		return count;
+	}
+	
+	public void createLoop() {
+			Node node = head;
+			while(node.next!=null) {
+				node=node.next;
+			}
+			node.next=head;
+	}
+	
+	public boolean isLoopFound() {
+		Node node =head;
+		while(node!=null) {
+			if(node.next==head) {
+				return true;
+			}
+			node=node.next;
+		}
+		return false;
+	}
+	public int lengthOfLoop() {
+		Node node =head;
+		int i=0;
+		while(node!=null) {
+			i++;
+			if(node.next==head) {
+				return i;
+			}
+			node=node.next;
+		}
+		return 0;
+	}
+	
 	public void printList() {
 		Node node = head;
 		while(node!=null) {
@@ -155,11 +212,16 @@ public class SinglyLinkedList {
 		list.printList();
 		System.out.println("After Deleting At Position 43 ");
 		list.deleteNodeAtPosition(43);
-		list.printList();
 		System.out.println("Length of list : "+list.getLengthOfList());
 		System.out.println("Position for 5 in list : "+list.searchNode(5));
 		System.out.println("get 1st node : "+list.getNthNode(1));
 		System.out.println("get 2nd node from end : "+list.getNthNodeFromEnd(2));
+		System.out.println("Mid Element of list : "+list.getMiddleOfList());
+		System.out.println("Count occurance of 4 : "+list.countOccurance(4));
+		System.out.println("Loop in list deletcted - "+list.isLoopFound());
+		list.createLoop();
+		System.out.println("Loop in list deletcted - "+list.isLoopFound());
+		System.out.println("Length of loop - "+list.lengthOfLoop());
 		System.out.println("List Deleted ");
 		list.deleteList();
 		list.printList();
